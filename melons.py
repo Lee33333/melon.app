@@ -24,7 +24,7 @@ def show_melon(id):
     """This page shows the details of a given melon, as well as giving an
     option to buy the melon."""
     melon = model.get_melon_by_id(id)
-    print melon
+    # print melon
     return render_template("melon_details.html",
                   display_melon = melon)
 
@@ -35,36 +35,71 @@ def shopping_cart():
     # accompanying screenshots for details."""
     return render_template("cart.html")
 
-@app.route("/add_to_cart/<int:id>")
-def add_to_cart(id):
+@app.route("/add_to_cart/<string:melon_id>")
+def add_to_cart(melon_id):
+    # import pdb; pdb.set_trace()
+
     # """TODO: Finish shopping cart functionality using session variables to hold
     # cart list.
 
     # Intended behavior: when a melon is added to a cart, redirect them to the
     # shopping cart page, while displaying the message
     # "Successfully added to cart" """
-    if session['cart'] == False:
-        session['cart'] = dict()                                                         
-    elif session['cart'] == True:
-        if id in session.keys():
-            session['cart'][id] = 1
+
+    if not 'cart' in session:
+        session['cart'] = {}
+        session['cart'][melon_id]=1
+        print "Here!"
     else:
-        session['cart'][id] += 1 
-    print session
+        if session['cart'].get(melon_id) == None:
+            session['cart'][melon_id] = 1
+        else:
+            session['cart'][melon_id] += 1
+
+    cart_list = []
+
+    for key in session['cart']:
+        melon = model.get_melon_by_id(key)
+        melon_tuple = (melon, session['cart'][key])
+        cart_list.append(melon_tuple)
+
+    print cart_list
+
+    return render_template('cart.html', cart_list = cart_list)
+
+    # if session['cart']== True:
+    # print session['cart']
+    # if melon_id in session['cart'].keys():
+    #     session['cart'][melon_id] = 1 + session['cart'][melon_id]
+    #     print "Now here"
+    # else:
+    #     session['cart'][melon_id] = 1
+    #     print "or here!"
+
+    # melon_dict = session['cart'] 
+    # print melon_dict
+   
+
+    # return render_template("cart.html", melon_list = melon_list, our_melon = our_melon)
 
 
+    # elif session['cart'] == True:
+    #     if id in session.keys():
+    #         session['cart'][id] = 1
+    # else:
+    #     session['cart'][id] += 1 
+    # print session
 
 
+    # our_melon = model.get_melon_by_id(id)
+    # # create empty list for melons
+    # melon_list = []
+    # # add our melon to the list
+    # melon_list.append(our_melon)
+    # # pass list of melons to html
 
-    our_melon = model.get_melon_by_id(id)
-    # create empty list for melons
-    melon_list = []
-    # add our melon to the list
-    melon_list.append(our_melon)
-    # pass list of melons to html
-
-    print melon_list
-    return render_template("cart.html", melon_list = melon_list, our_melon = our_melon)
+    # print melon_list
+   
 
 
 
