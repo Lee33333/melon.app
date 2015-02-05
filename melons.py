@@ -30,21 +30,26 @@ def show_melon(id):
 
 @app.route("/cart")
 def shopping_cart():
-    """TODO: Display the contents of the shopping cart. The shopping cart is a
-    list held in the session that contains all the melons to be added. Check
-    accompanying screenshots for details."""
+    # """TODO: Display the contents of the shopping cart. The shopping cart is a
+    # list held in the session that contains all the melons to be added. Check
+    # accompanying screenshots for details."""
     return render_template("cart.html")
 
 @app.route("/add_to_cart/<int:id>")
 def add_to_cart(id):
-    """TODO: Finish shopping cart functionality using session variables to hold
-    cart list.
+    # """TODO: Finish shopping cart functionality using session variables to hold
+    # cart list.
 
-    Intended behavior: when a melon is added to a cart, redirect them to the
-    shopping cart page, while displaying the message
-    "Successfully added to cart" """
+    # Intended behavior: when a melon is added to a cart, redirect them to the
+    # shopping cart page, while displaying the message
+    # "Successfully added to cart" """
+    session['melon_id'] = id
 
-    return "Oops! This needs to be implemented!"
+    our_melon = model.get_melon_by_id(id)
+    print dir(our_melon)
+    print our_melon.price
+    return render_template("cart.html", our_melon = our_melon)
+
 
 
 @app.route("/login", methods=["GET"])
@@ -54,17 +59,17 @@ def show_login():
 
 @app.route("/login", methods=["POST"])
 def process_login():
-    """TODO: Receive the user's login credentials located in the 'request.form'
-    dictionary, look up the user, and store them in the session."""
-    return "Oops! This needs to be implemented"
+    """TODO: Receive the user's login credentials located in the 'request.form"""
+    pass
 
 
 @app.route("/checkout")
 def checkout():
-    """TODO: Implement a payment system. For now, just return them to the main
-    melon listing page."""
-    flash("Sorry! Checkout will be implemented in a future version of ubermelon.")
-    return redirect("/melons")
+    # """TODO Implement a payment system. For now, just return them to the main
+    # melon listing page."""
+    # flash("Sorry! Checkout will be implemented in a future version of ubermelon.")
+    # return redirect("/melons")
+    pass
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
