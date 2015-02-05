@@ -43,12 +43,27 @@ def add_to_cart(id):
     # Intended behavior: when a melon is added to a cart, redirect them to the
     # shopping cart page, while displaying the message
     # "Successfully added to cart" """
-    session['melon_id'] = id
+    if session['cart'] == False:
+        session['cart'] = dict()
+    elif session['cart'] == True:
+        session['cart'][id] = 1
+    else:
+        session['cart'][id] += 1 
+    print session
+
+
+
+
 
     our_melon = model.get_melon_by_id(id)
-    print dir(our_melon)
-    print our_melon.price
-    return render_template("cart.html", our_melon = our_melon)
+    # create empty list for melons
+    melon_list = []
+    # add our melon to the list
+    melon_list.append(our_melon)
+    # pass list of melons to html
+
+    print melon_list
+    return render_template("cart.html", melon_list = melon_list, our_melon = our_melon)
 
 
 
