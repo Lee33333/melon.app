@@ -44,9 +44,10 @@ def add_to_cart(id):
     # shopping cart page, while displaying the message
     # "Successfully added to cart" """
     if session['cart'] == False:
-        session['cart'] = dict()
+        session['cart'] = dict()                                                         
     elif session['cart'] == True:
-        session['cart'][id] = 1
+        if id in session.keys():
+            session['cart'][id] = 1
     else:
         session['cart'][id] += 1 
     print session
