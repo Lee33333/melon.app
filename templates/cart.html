@@ -4,14 +4,11 @@
 <table class="table table-striped">
  <tr><th>Melon Name</th><th>Quantity</th><th>Price</th><th>Total</th></tr>
 {% for item in cart_list %}
-<tr><td>{{item[0].common_name}}</td><td>{{item[1]}}</td><td>{{item[0].price}}</td></tr>
+<tr><td>{{item[0].common_name}}</td><td>{{item[1]}}</td><td>{{item[0].price}}</td><td>{{item[1]*item[0].price}}</td></tr>
 {%endfor %}
 
-<!--    
-    <tr><td>Charleston Gray Watermelon</td><td>2</td><td>$2.00</td><td>$4.00</td></tr>
-    <tr><td>Crenshaw</td><td>1</td><td>$2.00</td><td>$2.00</td></tr>
-    <tr><td>Ledmon Watermelon</td><td>2</td><td>$3.00</td><td>$6.00</td></tr> -->
 </table>
-<h3>Total: $27.00</h3>
+<h3>Total: {{total_price}} </h3>
 <a href="/checkout" class="btn btn-large btn-primary">Check Out</a>
 {% endblock %}
+

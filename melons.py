@@ -65,42 +65,13 @@ def add_to_cart(melon_id):
 
     print cart_list
 
-    return render_template('cart.html', cart_list = cart_list)
+    total_price = 0
 
-    # if session['cart']== True:
-    # print session['cart']
-    # if melon_id in session['cart'].keys():
-    #     session['cart'][melon_id] = 1 + session['cart'][melon_id]
-    #     print "Now here"
-    # else:
-    #     session['cart'][melon_id] = 1
-    #     print "or here!"
+    for item in cart_list:
+        price = item[1]*item[0].price
+        total_price = total_price + price
 
-    # melon_dict = session['cart'] 
-    # print melon_dict
-   
-
-    # return render_template("cart.html", melon_list = melon_list, our_melon = our_melon)
-
-
-    # elif session['cart'] == True:
-    #     if id in session.keys():
-    #         session['cart'][id] = 1
-    # else:
-    #     session['cart'][id] += 1 
-    # print session
-
-
-    # our_melon = model.get_melon_by_id(id)
-    # # create empty list for melons
-    # melon_list = []
-    # # add our melon to the list
-    # melon_list.append(our_melon)
-    # # pass list of melons to html
-
-    # print melon_list
-   
-
+    return render_template('cart.html', cart_list = cart_list, total_price = total_price)
 
 
 @app.route("/login", methods=["GET"])
