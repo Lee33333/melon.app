@@ -17,7 +17,7 @@ def list_melons():
     """This is the big page showing all the melons ubermelon has to offer"""
     melons = model.get_melons()
     return render_template("all_melons.html",
-                           melon_list = melons)
+                           melon_list=melons)
 
 @app.route("/melon/<int:id>")
 def show_melon(id):
@@ -33,7 +33,21 @@ def shopping_cart():
     # """TODO: Display the contents of the shopping cart. The shopping cart is a
     # list held in the session that contains all the melons to be added. Check
     # accompanying screenshots for details."""
-    return render_template("cart.html")
+    cart_list = []
+
+    # session['cart'] == {1: 17, 2: 10}  # melon #1 is 17, #2 is has 10
+    # cart_list == [(melon obj, 17), (melon obj, 10)]
+    for melon_id, qty in session['cart'].items():
+        melon = model.get_melon_by_id(melon_id)
+        melon_tuple = (melon, qty)
+        cart_list.append(melon_tuple)
+
+
+    print cart_list
+
+    final_total = total_price(cart_list)
+
+    return render_template("cart.html", cart_list = cart_list, final_total = total_price)
 
 @app.route("/add_to_cart/<string:melon_id>")
 def add_to_cart(melon_id):
@@ -73,6 +87,16 @@ def add_to_cart(melon_id):
 
     return render_template('cart.html', cart_list = cart_list, total_price = total_price)
 
+
+def total_price(cart_list):
+    
+    total_price = 0
+
+    for melon, quantity in cart_list:
+        price = quantity*melon.price
+        total_price = total_price + price
+
+    return total_price
 
 @app.route("/login", methods=["GET"])
 def show_login():
