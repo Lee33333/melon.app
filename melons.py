@@ -72,9 +72,11 @@ def add_to_cart(melon_id):
         print "Here!"
     else:
         if session['cart'].get(melon_id) == None:
+            flash('melon added!')
             session['cart'][melon_id] = 1
         else:
             session['cart'][melon_id] += 1
+            flash('melon added!')
 
     cart_list = []
 
