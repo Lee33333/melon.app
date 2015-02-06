@@ -33,6 +33,12 @@ def shopping_cart():
     # """TODO: Display the contents of the shopping cart. The shopping cart is a
     # list held in the session that contains all the melons to be added. Check
     # accompanying screenshots for details."""
+    
+
+    if not 'cart' in session:
+        flash('Your cart is empty!')
+        return render_template("cart.html")
+
     cart_list = []
 
     # session['cart'] == {1: 17, 2: 10}  # melon #1 is 17, #2 is has 10
@@ -45,9 +51,9 @@ def shopping_cart():
 
     print cart_list
 
-    final_total = total_price(cart_list)
+    final_price = total_price(cart_list)
 
-    return render_template("cart.html", cart_list = cart_list, final_total = total_price)
+    return render_template("cart.html", cart_list = cart_list, final_price= final_price)
 
 @app.route("/add_to_cart/<string:melon_id>")
 def add_to_cart(melon_id):
@@ -79,17 +85,13 @@ def add_to_cart(melon_id):
 
     print cart_list
 
-    total_price = 0
+    final_price = total_price(cart_list)
 
-    for item in cart_list:
-        price = item[1]*item[0].price
-        total_price = total_price + price
-
-    return render_template('cart.html', cart_list = cart_list, total_price = total_price)
+    return render_template("cart.html", cart_list = cart_list, final_price = final_price)
 
 
 def total_price(cart_list):
-    
+
     total_price = 0
 
     for melon, quantity in cart_list:
