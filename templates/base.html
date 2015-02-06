@@ -12,6 +12,9 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/cart"><img class="melon-cart" src="/static/img/watermelon.png"> My Melon Cart</a></li>
+                        {% if session['cust'] is defined %}
+                        <li><a href="/login">{{session['cust']}}</a></li>
+                        {% endif %}
                         <li><a href="/login">Log In</a></li>
                     </ul>
                 </div>

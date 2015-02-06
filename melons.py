@@ -114,7 +114,12 @@ def process_login():
     password = request.form.get("password")
 
     cust = model.get_customer_by_email(email)
-    print cust.email
+ 
+    if cust == None:
+        flash('Login Unsuccessful')
+        return render_template("login.html")
+    else: 
+        session["cust"] = cust.givenname
 
     # cust = model.Customer(email, password)
     # print cust.email, cust.password
@@ -126,7 +131,7 @@ def process_login():
     #     print "yes!"
     #     print session['login']
     
-    return render_template("login.html")
+    return render_template("index.html")
 
 
 @app.route("/checkout")
