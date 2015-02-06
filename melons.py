@@ -113,13 +113,18 @@ def process_login():
     email = request.form.get("email")
     password = request.form.get("password")
 
+    cust = model.get_customer_by_email(email)
+    print cust.email
 
-    if not 'login' in session:
-        session['login'] = {}
-    if email not in session['login']:
-        session['login'][email]=password
-        print "yes!"
-        print session['login']
+    # cust = model.Customer(email, password)
+    # print cust.email, cust.password
+
+    # if not 'login' in session:
+    #     session['login'] = {}
+    # if email not in session['login']:
+    #     session['login'][email]=password
+    #     print "yes!"
+    #     print session['login']
     
     return render_template("login.html")
 
