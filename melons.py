@@ -110,7 +110,18 @@ def show_login():
 @app.route("/login", methods=["POST"])
 def process_login():
     """TODO: Receive the user's login credentials located in the 'request.form"""
-    pass
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+
+    if not 'login' in session:
+        session['login'] = {}
+    if email not in session['login']:
+        session['login'][email]=password
+        print "yes!"
+        print session['login']
+    
+    return render_template("login.html")
 
 
 @app.route("/checkout")
