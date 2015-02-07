@@ -15,7 +15,9 @@
                         {% if session['cust'] is defined %}
                         <li><a href="/login">{{session['cust']}}</a></li>
                         {% endif %}
+                        {% if session['cust'] is not defined %}
                         <li><a href="/login">Log In</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
